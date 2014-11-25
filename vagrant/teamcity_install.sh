@@ -30,8 +30,8 @@ sudo chown -R teamcity /srv/.BuildServer
 # download postgres
 sudo mkdir -p /srv/.BuildServer/lib/jdbc
 sudo mkdir -p /srv/.BuildServer/config
-sudo wget -q -c http://jdbc.postgresql.org/download/postgresql-9.3-1101.jdbc41.jar -O /srv/.BuildServer/lib/jdbc/postgresql-9.3-1101.jdbc41.jar
-sudo cp /vagrant/files/server/conf/postgres.database.properties /srv/.BuildServer/config/database.properties
+#sudo wget -q -c http://jdbc.postgresql.org/download/postgresql-9.3-1101.jdbc41.jar -O /srv/.BuildServer/lib/jdbc/postgresql-9.3-1101.jdbc41.jar
+#sudo cp /vagrant/files/server/conf/postgres.database.properties /srv/.BuildServer/config/database.properties
 
 # ensure owership
 sudo chown -R teamcity /srv/TeamCity
