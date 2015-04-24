@@ -12,9 +12,9 @@ sudo apt-get install -y curl
 #sudo apt-get install -y git
 
 # install team city
-sudo wget -q -c http://download.jetbrains.com/teamcity/TeamCity-8.1.2.tar.gz -O /tmp/TeamCity-8.1.2.tar.gz
-sudo tar -xvf /tmp/TeamCity-8.1.2.tar.gz -C /srv
-sudo rm -rf /tmp/TeamCity-8.1.2.tar.gz
+sudo wget -q -c http://download-cf.jetbrains.com/teamcity/TeamCity-9.0.4.tar.gz -O /tmp/TeamCity-9.0.4.tar.gz
+sudo tar -xvf /tmp/TeamCity-9.0.4.tar.gz -C /srv
+sudo rm -rf /tmp/TeamCity-9.0.4.tar.gz
 sudo mkdir /srv/.BuildServer
 
 # create user
