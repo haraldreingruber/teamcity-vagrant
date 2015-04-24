@@ -7,14 +7,6 @@ sudo apt-get update
 sudo apt-get install -y openjdk-7-jre-headless
 sudo apt-get install -y curl
 
-# install postgres
-sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-sudo apt-get install wget ca-certificates
-wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-sudo apt-get update
-sudo apt-get upgrade
-sudo apt-get install -y postgresql-9.4 pgadmin3
-
 # install build agent dependencies
 #sudo apt-get install -y mercurial
 #sudo apt-get install -y git

@@ -39,6 +39,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define $nodes[:teamcity][:hostname] do | node_config |
     with_node_configuration node_config, $nodes[:teamcity]
     node_config.vm.provision :shell do | shell |
+      shell.path = 'vagrant/teamcity_postgresql.sh'
+    end
+    node_config.vm.provision :shell do | shell |
       shell.path = 'vagrant/teamcity_install.sh'
     end
     node_config.vm.provision :shell do | shell |
