@@ -8,8 +8,8 @@ sudo apt-get install -y openjdk-7-jre-headless
 sudo apt-get install -y curl
 
 # install build agent dependencies
-sudo apt-get install -y mercurial
-sudo apt-get install -y git
+#sudo apt-get install -y mercurial
+#sudo apt-get install -y git
 
 # install team city
 sudo wget -q -c http://download.jetbrains.com/teamcity/TeamCity-8.1.2.tar.gz -O /tmp/TeamCity-8.1.2.tar.gz
