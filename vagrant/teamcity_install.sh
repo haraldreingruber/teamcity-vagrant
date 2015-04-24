@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -v
 
 cd /
 
@@ -6,6 +6,14 @@ cd /
 sudo apt-get update
 sudo apt-get install -y openjdk-7-jre-headless
 sudo apt-get install -y curl
+
+# install postgres
+sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+sudo apt-get install wget ca-certificates
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install -y postgresql-9.4 pgadmin3
 
 # install build agent dependencies
 #sudo apt-get install -y mercurial
@@ -30,8 +38,8 @@ sudo chown -R teamcity /srv/.BuildServer
 # download postgres
 sudo mkdir -p /srv/.BuildServer/lib/jdbc
 sudo mkdir -p /srv/.BuildServer/config
-#sudo wget -q -c http://jdbc.postgresql.org/download/postgresql-9.3-1101.jdbc41.jar -O /srv/.BuildServer/lib/jdbc/postgresql-9.3-1101.jdbc41.jar
-#sudo cp /vagrant/files/server/conf/postgres.database.properties /srv/.BuildServer/config/database.properties
+sudo wget -q -c http://jdbc.postgresql.org/download/postgresql-9.3-1101.jdbc41.jar -O /srv/.BuildServer/lib/jdbc/postgresql-9.3-1101.jdbc41.jar
+sudo cp /vagrant/files/server/conf/postgres.database.properties /srv/.BuildServer/config/database.properties
 
 # ensure owership
 sudo chown -R teamcity /srv/TeamCity
