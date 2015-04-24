@@ -5,20 +5,26 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  $domain = 'localdomain'
+  $domain = 'local'
   $trusty64_box = 'ubuntu/trusty64'
   $trusty64_url = 'https://vagrantcloud.com/ubuntu/boxes/trusty64'
+  $win81_box = 'fundpuls/windows-81'
+  $win81_url = 'https://atlas.hashicorp.com/fundpuls/boxes/windows-81'
+  $osx_box = 'AndrewDryga/vagrant-box-osx'
+  $osx_url = 'http://files.dryga.com/boxes/osx-yosemite-0.2.0.box'
 
   $nodes = {
-    teamcity: { :hostname => 'teamcity', :ip => '192.168.80.10', :ram => '2048' },
-    agent0: { :hostname => 'agent0',  :ip => '192.168.80.12', :ram => '2048', :box => $trusty64_box, :url => $trusty64_url }
+    teamcity: { :hostname => 'teamcity', :ip => '192.168.50.170', :ram => '2048' },
+    agentOSX: { :hostname => 'agentOSX',  :ip => '192.168.50.171', :ram => '2048', :box => $osx_box, :url => $osx_url },
+    agentWin: { :hostname => 'agentWin',  :ip => '192.168.50.172', :ram => '2048', :box => $win81_box, :url => $win81_url }
+    #agentUbuntu: { :hostname => 'agentUbuntu',  :ip => '192.168.50.173', :ram => '2048', :box => $trusty64_box, :url => $trusty64_url }
   }
 
   def with_node_configuration(node_config, node)
       node_config.vm.box = node[:box] ? node[:box] : $trusty64_box
       node_config.vm.box_url = node[:url] ? node[:url] : $trusty64_url
 
-      node_config.vm.hostname = node[:hostname] + '.' + $domain
+      node_config.vm.hostname = node[:hostname] #+ '.' + $domain
       node_config.vm.network :private_network, ip: node[:ip]
 
       memory = node[:ram] ? node[:ram] : 256
@@ -43,14 +49,37 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  config.vm.define $nodes[:agent0][:hostname] do | node_config |
-    with_node_configuration node_config, $nodes[:agent0]
+  config.vm.define $nodes[:agentOSX][:hostname] do | node_config |
+    with_node_configuration node_config, $nodes[:agentOSX]
 
     node_config.vm.provision :shell do | shell |
-      shell.path = 'vagrant/setup_teamcity_agent.sh'
+      shell.path = 'vagrant/setup_osx_teamcity_agent.sh'
     end
     node_config.vm.provision :shell do | shell |
-      shell.path = 'vagrant/node.sh'
+      shell.path = 'vagrant/setup_osx_cmake.sh'
     end
   end
+  config.vm.define $nodes[:agentWin][:hostname] do | node_config |
+    with_node_configuration node_config, $nodes[:agentWin]
+
+    node_config.vm.provision :shell do | shell |
+      shell.path = 'vagrant/setup_win_chocolatey.cmd'
+    end
+    node_config.vm.provision :shell do | shell |
+      shell.path = 'vagrant/setup_win_teamcity_agent.cmd'
+    end
+    node_config.vm.provision :shell do | shell |
+      shell.path = 'vagrant/setup_win_cmake.cmd'
+    end
+    node_config.vm.provision :shell do | shell |
+      shell.path = 'vagrant/setup_win_visual_studio_2013.cmd'
+    end
+  end
+#  config.vm.define $nodes[:agentUbuntu][:hostname] do | node_config |
+#    with_node_configuration node_config, $nodes[:agentUbuntu]
+#
+#    node_config.vm.provision :shell do | shell |
+#      shell.path = 'vagrant/setup_ubuntu_agent.sh'
+#    end
+#  end
 end
