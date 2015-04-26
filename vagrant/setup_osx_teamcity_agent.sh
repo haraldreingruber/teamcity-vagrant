@@ -23,19 +23,26 @@ sudo dscl . -create /Users/teamcity UniqueID 8005
 sudo dscl . -create /Users/teamcity PrimaryGroupID 20
 sudo dscl . -create /Users/teamcity NFSHomeDirectory /Users/teamcity
 sudo dscl . -passwd /Users/teamcity teamcity
+sudo mkdir /Users/teamcity
+sudo chown -R teamcity /Users/teamcity
 
+# configure teamcity agent
 sudo mkdir -p /srv/agent/conf
 sudo chown -R teamcity /srv/agent
+sudo chown root /srv/agent/bin/jetbrains.teamcity.BuildAgent.plist 
+
 #sudo chmod ug+x /srv/agent/bin/agent.shs
-sudo chmod ug+x /srv/agent/launcher/bin/*
+chmod +x /srv/agent/launcher/bin/*
+chmod +x /srv/agent/bin/*
+
 
 #AGENT_NAME=`hostname -s`
 #sed -e "s/^name=.*$/name=$AGENT_NAME/g" \
 #    -e "s/^serverUrl=.*$/serverUrl=http:\/\/teamcity:8111\/g" \
 #     < /srv/agent/conf/buildAgent.dist.properties > /etc/teamcity-agent.properties
-sudo cp /vagrant/files/agent/buildAgent.osx.properties /srv/agent/conf/buildAgent.properties
+cp /vagrant/files/agent/buildAgent.osx.properties /srv/agent/conf/buildAgent.properties
 
-sudo sh /srv/agent/bin/mac.launchd.sh load
+sh /srv/agent/bin/mac.launchd.sh load
 
 
 #sudo chown : `which brew`
