@@ -6,7 +6,7 @@ brew install wget
 brew install homebrew/dupes/unzip
 
 cat >> /etc/hosts <<EOF
-192.168.50.170   teamcity.localdomain teamcity
+192.168.50.170   teamcity.local teamcity
 EOF
 
 # install team city
